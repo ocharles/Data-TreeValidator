@@ -13,7 +13,7 @@ use aliased 'Data::TreeValidator::Branch';
     extends 'Data::TreeValidator::Branch';
 
     use Data::TreeValidator::Constraints qw( required );
-    use Data::TreeValidator::Sugar qw( leaf branch );
+    use Data::TreeValidator::Sugar qw( leaf branch repeating );
 
     has '+children' => (
         default => sub { {
@@ -24,6 +24,9 @@ use aliased 'Data::TreeValidator::Branch';
                 last => leaf(
                     constraints => [ required ],
                 )
+            },
+            friends => repeating {
+                name => leaf( constraints => [ required ] )
             }
         } }
     );
@@ -34,14 +37,16 @@ my $clean;
 my $validator = Validator->new;
 $clean = $validator->process({
     'name.first' => 'Roger',
-    'name.last' => 'Test'
+    'name.last' => 'Test',
+    'friends.0.name' => 'Ollie',
 });
 
 Dwarn $clean->clean;
 
 $clean = $validator->process({
     'name.first' => 'Roger',
-    'name.last' => undef
+    'name.last' => undef,
+    'friends.0.name' => 'Ollie'
 });
 
 Dwarn $clean->clean;

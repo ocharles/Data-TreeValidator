@@ -10,6 +10,7 @@ use MooseX::Types -declare => [qw(
     Value
 )];
 
+use CGI::Expand qw( expand_hash );
 use Hash::Flatten qw( unflatten );
 
 use MooseX::Types::Moose
@@ -26,7 +27,7 @@ subtype NodeName, as Str, where { /^[^\.]+$/ };
 
 subtype FlatMap, as Map[ Str, Value ];
 
-coerce HashTree, from FlatMap, via { unflatten($_) };
+coerce HashTree, from FlatMap, via { expand_hash($_) };
 
 role_type Node, { role => 'Data::TreeValidator::Node' };
 
