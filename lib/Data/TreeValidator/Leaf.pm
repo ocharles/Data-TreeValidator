@@ -45,7 +45,7 @@ sub process {
                 $constraint->( $input );
             }
             catch {
-                push @errors, $_; 
+                push @errors, $_;
             }
         }
     }

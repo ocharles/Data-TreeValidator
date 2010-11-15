@@ -11,7 +11,6 @@ use MooseX::Types -declare => [qw(
 )];
 
 use CGI::Expand qw( expand_hash );
-use Hash::Flatten qw( unflatten );
 
 use MooseX::Types::Moose
     qw( ArrayRef CodeRef Str Undef ),
