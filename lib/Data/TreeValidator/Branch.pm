@@ -17,7 +17,7 @@ has 'children' => (
     traits => [ 'Hash' ],
     handles => {
         children => 'values',
-        names => 'keys',
+        child_names => 'keys',
         add_child => 'set',
         child => 'get',
     }
@@ -34,7 +34,7 @@ sub process {
         results => {
             map {
                 $_ => $self->child($_)->process($tree->{$_})
-            } $self->names
+            } $self->child_names
         }
     );
 }

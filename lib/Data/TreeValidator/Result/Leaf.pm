@@ -3,8 +3,10 @@ use Moose;
 
 has 'clean' => (
     is => 'ro',
-    predicate => 'valid',
+    predicate => 'has_clean_data'
 );
+
+sub valid { shift->has_clean_data }
 
 with 'Data::TreeValidator::Result';
 

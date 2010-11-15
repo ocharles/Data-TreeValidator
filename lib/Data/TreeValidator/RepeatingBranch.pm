@@ -29,7 +29,7 @@ sub process {
                     results => {
                         map {
                             $_ => $self->child($_)->process($element->{$_})
-                        } $self->names
+                        } $self->child_names
                     }
                 )
             } @$tree
