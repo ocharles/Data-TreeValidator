@@ -1,4 +1,5 @@
 package Data::TreeValidator::Leaf;
+# ABSTRACT: Represents a single leaf node in the validation tree specification
 use Moose;
 use namespace::autoclean;
 
@@ -66,3 +67,36 @@ sub process {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+Represents a leaf in a tree, that is - a single atomic value. At some point all
+branches will reduce to these nodes.
+
+=method constraints
+
+Returns an array of all constraints for this leaf.
+
+=method add_constraint
+
+Adds a constraint to this leaf, at the end of the list
+
+=method transformations
+
+Returns an array of all transformations for this leaf.
+
+=method add_transformation
+
+Adds a transformation for this leaf, at the end of the list
+
+=method process($input)
+
+Takes $input, and matches it against all the constraints for this leaf. If they
+all pass (that is, none throw exceptions), then C<$input> is passed through all
+leaf transformations.
+
+AT the end of processing, a L<Data::TreeValidator::Result::Leaf> object is
+returned. This can be inspected to determine if validation was sucessful, and
+obtain clean data.
+
+=cut

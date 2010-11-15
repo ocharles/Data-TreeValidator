@@ -1,4 +1,5 @@
 package Data::TreeValidator::RepeatingBranch;
+# ABSTRACT: A branch that can have its input repeated multiple times
 use Moose;
 use namespace::autoclean;
 
@@ -38,3 +39,23 @@ sub process {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+A repeatable branch is one that has a specification, and can consume input
+multiple times. The branch can have any valid specification (including
+repeatable elements).
+
+This class has all the functionality of L<Data::TreeValidation::Branch>.
+
+=method process($input)
+
+Takes an array reference as input, and attempts to validate each element against
+the branch specification.
+
+Returns a L<Data::TreeValidator::Result::Repeating> result object, which can be
+inspected to determine if the processing was valid, and to obtain the cleaned
+data (which will be wrapped as an array reference).
+
+=cut
+

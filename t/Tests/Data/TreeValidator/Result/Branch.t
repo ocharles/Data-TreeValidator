@@ -53,7 +53,7 @@ test 'validity' => sub {
         results => { leaf1 => $invalid_result, leaf2 => $valid_result },
         input => { }
     );
-    
+
     ok($valid_branch->valid,
         'a branch is valid if all children are valid');
     ok(!$invalid_branch->valid,

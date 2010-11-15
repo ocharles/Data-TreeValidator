@@ -1,4 +1,5 @@
 package Data::TreeValidator::Result::Branch;
+# ABSTRACT: Contains the result of processing a branch
 use Moose;
 use namespace::autoclean;
 
@@ -36,3 +37,35 @@ sub clean {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+This contains the result of processing a L<Data::TreeValidator::Branch>.
+
+=method results
+
+Returns a list of all result values.
+
+=method result_names
+
+Returns a list of all child names that were processed
+
+=method result_count
+
+Returns the amount of child results this node directly has
+
+=method result($name)
+
+Fetch a result with a given name
+
+=method valid
+
+This result will be valid if all children are valid
+
+=method clean
+
+Clean data will be returned as a hash reference of result name to it's clean
+data. If a result is not clean, it will not be included in the clean hash.
+
+=cut
+

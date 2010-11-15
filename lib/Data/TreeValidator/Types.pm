@@ -1,4 +1,5 @@
 package Data::TreeValidator::Types;
+# ABSTRACT: Internal data types used by Data::TreeValidator
 use MooseX::Types -declare => [qw(
     Constraint
     FlatMap

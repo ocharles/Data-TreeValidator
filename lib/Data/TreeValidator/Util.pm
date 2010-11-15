@@ -1,4 +1,5 @@
 package Data::TreeValidator::Util;
+# ABSTRACT: Helpful utilities for working with tree validators
 use strict;
 use warnings;
 
@@ -25,3 +26,17 @@ sub fail_constraint {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+A collection of helpful utilities for working with tree validators.
+
+All methods below are available for import into calling modules.
+
+=method fail_constraint($message)
+
+Raises an exception with the given C<$message>. Avoids extra information such as
+a stack trace or line numbers
+
+=cut
+

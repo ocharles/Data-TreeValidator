@@ -27,7 +27,7 @@ test 'branch with children' => sub {
 
     isa_ok($branch => Branch,
         'branch { ... } creates a branch');
-    
+
     is($branch->children => 3,
         'branch { ... } has children');
     ok(defined $branch->child('first_name'), 'has the "first_name" child');

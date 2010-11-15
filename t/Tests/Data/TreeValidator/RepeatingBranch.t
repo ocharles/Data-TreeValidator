@@ -22,7 +22,7 @@ test 'single repetition' => sub {
             test => $leaf
         }
     );
-    
+ 
     my $input = 'Gummy bears!';
     my $result = $branch->process([ { test => $input } ]);
     ok(defined $result, 'processing a repeating branch yields a result');
@@ -40,7 +40,7 @@ test 'multiple repetitions' => sub {
             test => $leaf
         }
     );
-    
+
     my $input1 = 'Gummy bears!';
     my $input2 = 'Steeeeve';
 
