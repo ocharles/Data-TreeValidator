@@ -36,5 +36,6 @@ role_type Result, { role => 'Data::TreeValidator::Result' };
 subtype Value, as Undef | MooseValue;
 
 subtype Constraint, as CodeRef;
+subtype Transformation, as CodeRef;
 
 1;
