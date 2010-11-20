@@ -50,6 +50,7 @@ sub process {
         }
     );
 
+    # XXX Try::Tiny doesn't work here -- why? 
     eval {
         $self->cross_validate($result->clean);
     };
