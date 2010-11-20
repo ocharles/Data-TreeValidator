@@ -57,7 +57,7 @@ test 'multiple repetitions' => sub {
     ], 'result has correct clean data');
 };
 
-test 'repeating branch with default value' => sub {
+test 'repeating branch with initializers' => sub {
     my $leaf = MockLeaf->new;
     my $branch = RepeatingBranch->new(
         children => {
@@ -65,15 +65,16 @@ test 'repeating branch with default value' => sub {
         }
     );
    
-    my $default = [
-        { child => 'Default value' },
-        { child => 'Second default' }
+    my $initialize = [
+        { child => 'First value' },
+        { child => 'Second value' }
     ];
-    my $result = $branch->process(undef, default => $default);
+    my $result = $branch->process(undef, initialize => $initialize);
 
-    ok($result->valid, 'processing with a default value gives a valid result');
-    is_deeply($result->clean => $default,
-        'clean value takes the default value');
+    ok($result->valid,
+        'processing with a initialize value gives a valid result');
+    is_deeply($result->clean => $initialize,
+        'clean value takes the initialize value');
 };
 
 run_me;

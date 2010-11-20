@@ -54,7 +54,7 @@ test 'branch with children' => sub {
         'result object only has results for children');
 };
 
-test 'branch with default value' => sub {
+test 'branch with an initializer' => sub {
     my $leaf = MockLeaf->new;
     my $branch = Branch->new(
         children => {
@@ -62,12 +62,13 @@ test 'branch with default value' => sub {
         }
     );
    
-    my $default = { child => 'Default value' };
-    my $result = $branch->process(undef, default => $default);
+    my $initialize = { child => 'Value' };
+    my $result = $branch->process(undef, initialize => $initialize);
 
-    ok($result->valid, 'processing with a default value gives a valid result');
-    is_deeply($result->clean => $default,
-        'clean value takes the default value');
+    ok($result->valid,
+        'processing with an initializer gives a valid result');
+    is_deeply($result->clean => $initialize,
+        'clean value takes the initializers value');
 };
 
 run_me;

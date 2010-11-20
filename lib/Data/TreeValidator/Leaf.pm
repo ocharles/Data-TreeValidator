@@ -40,7 +40,7 @@ sub process {
     );
     my %args = @_;
 
-    my $process = $input || $args{default};
+    my $process = $input || $args{initialize};
 
     my @errors;
     for my $constraint ($self->constraints) {

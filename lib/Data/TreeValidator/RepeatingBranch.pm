@@ -21,7 +21,7 @@ sub process {
     );
     my %args = @_;
 
-    my $process = $tree || $args{default};
+    my $process = $tree || $args{initialize};
 
     return RepeatingResult->new(
         input => $tree,

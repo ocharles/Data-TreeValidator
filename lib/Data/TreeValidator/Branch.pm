@@ -35,7 +35,7 @@ sub process {
         input => $tree,
         results => {
             map {
-                my $process = $tree->{$_} || $args{default}->{$_};
+                my $process = $tree->{$_} || $args{initialize}->{$_};
                 $_ => $self->child($_)->process($process)
             } $self->child_names
         }
