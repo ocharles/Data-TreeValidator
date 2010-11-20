@@ -57,6 +57,25 @@ test 'multiple repetitions' => sub {
     ], 'result has correct clean data');
 };
 
+test 'repeating branch with default value' => sub {
+    my $leaf = MockLeaf->new;
+    my $branch = RepeatingBranch->new(
+        children => {
+            child => $leaf
+        }
+    );
+   
+    my $default = [
+        { child => 'Default value' },
+        { child => 'Second default' }
+    ];
+    my $result = $branch->process(undef, default => $default);
+
+    ok($result->valid, 'processing with a default value gives a valid result');
+    is_deeply($result->clean => $default,
+        'clean value takes the default value');
+};
+
 run_me;
 done_testing;
 
