@@ -35,15 +35,18 @@ has 'transformations' => (
 
 sub process {
     my $self = shift;
-    my ($input) = pos_validated_list(\@_,
+    my ($input) = pos_validated_list([ shift ],
         { isa => Value }
     );
+    my %args = @_;
+
+    my $process = $input || $args{default};
 
     my @errors;
     for my $constraint ($self->constraints) {
         if (is_CodeRef($constraint)) {
             try {
-                $constraint->( $input );
+                $constraint->( $process );
             }
             catch {
                 push @errors, $_;
@@ -53,7 +56,7 @@ sub process {
 
     my $clean;
     if (@errors == 0) {
-        $clean = $input;
+        $clean = $process;
         for my $transformation ($self->transformations) {
             $clean = $transformation->( $clean );
         }

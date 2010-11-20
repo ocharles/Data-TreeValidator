@@ -69,5 +69,15 @@ test 'leaf with passing constraints' => sub {
     is($result->clean => $input, 'clean data maches input');
 };
 
+test 'leaf with default value' => sub {
+    my $leaf = Leaf->new;
+   
+    my $default = 'Default value';
+    my $result = $leaf->process(undef, default => $default);
+
+    ok($result->valid, 'processing with a default value gives a valid result');
+    is($result->clean => $default, 'clean value takes the default value');
+};
+
 run_me;
 done_testing;
