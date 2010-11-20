@@ -54,5 +54,21 @@ test 'branch with children' => sub {
         'result object only has results for children');
 };
 
+test 'branch with default value' => sub {
+    my $leaf = MockLeaf->new;
+    my $branch = Branch->new(
+        children => {
+            child => $leaf
+        }
+    );
+   
+    my $default = { child => 'Default value' };
+    my $result = $branch->process(undef, default => $default);
+
+    ok($result->valid, 'processing with a default value gives a valid result');
+    is_deeply($result->clean => $default,
+        'clean value takes the default value');
+};
+
 run_me;
 done_testing;

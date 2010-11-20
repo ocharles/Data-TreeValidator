@@ -4,7 +4,7 @@ use Moose;
 use namespace::autoclean;
 
 use Data::TreeValidator::Types qw( HashTree Node );
-use MooseX::Types::Moose qw( Str );
+use MooseX::Types::Moose qw( Maybe Str );
 use MooseX::Types::Structured qw( Map );
 
 use aliased 'Data::TreeValidator::Result::Branch' => 'Result',;
@@ -26,15 +26,17 @@ has 'children' => (
 
 sub process {
     my $self = shift;
-    my ($tree) = pos_validated_list(\@_,
-        { isa => HashTree, coerce => 1 }
+    my ($tree) = pos_validated_list([ shift ],
+        { isa => Maybe[HashTree], coerce => 1 }
     );
+    my %args = @_;
 
     return Result->new(
         input => $tree,
         results => {
             map {
-                $_ => $self->child($_)->process($tree->{$_})
+                my $process = $tree->{$_} || $args{default}->{$_};
+                $_ => $self->child($_)->process($process)
             } $self->child_names
         }
     );
