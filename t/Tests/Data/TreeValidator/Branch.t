@@ -71,5 +71,50 @@ test 'branch with an initializer' => sub {
         'clean value takes the initializers value');
 };
 
+test 'branch with a cross node validator' => sub {
+    use Data::TreeValidator::Util qw( fail_constraint );
+
+    my $leaf = MockLeaf->new;
+    my $error_message = 'value1 and value2 must be equal';
+    my $branch = Branch->new(
+        children => {
+            value1 => $leaf,
+            value2 => $leaf
+        },
+        cross_validator => sub {
+            my $clean = shift;
+            fail_constraint($error_message)
+                unless $clean->{value1} eq $clean->{value2};
+        }
+    );
+
+    subtest 'test with valid data' => sub {
+        my $input = {    
+            value1 => 'hello',
+            value2 => 'hello',
+        };
+        my $result = $branch->process($input);
+
+        ok($result->valid,
+            'processing with data that meets cross validator is valid');
+        is_deeply($result->clean => $input,
+            'clean data matches input');
+    };
+
+    subtest 'test with invalid data' => sub {
+        my $result = $branch->process({
+            value1 => 'hello',
+            value2 => 'goodbye',
+        });
+
+        ok(!$result->valid,
+            'processing with data that does not meet cross validator is '.
+            'invalid');
+        is($result->errors => 1, 'has one error');
+        ok((grep { $_ eq $error_message } $result->errors),
+            'has the error from the cross validator');
+    };
+};
+
 run_me;
 done_testing;

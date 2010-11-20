@@ -4,7 +4,7 @@ use Moose;
 use namespace::autoclean;
 
 use Data::TreeValidator::Types qw( HashTree Node );
-use MooseX::Types::Moose qw( Maybe Str );
+use MooseX::Types::Moose qw( CodeRef Maybe Str );
 use MooseX::Types::Structured qw( Map );
 
 use aliased 'Data::TreeValidator::Result::Branch' => 'Result',;
@@ -24,6 +24,15 @@ has 'children' => (
     }
 );
 
+has 'cross_validator' => (
+    isa => CodeRef,
+    traits => [ 'Code' ],
+    default => sub { sub {} },
+    handles => {
+        cross_validate => 'execute',
+    }
+);
+
 sub process {
     my $self = shift;
     my ($tree) = pos_validated_list([ shift ],
@@ -31,7 +40,7 @@ sub process {
     );
     my %args = @_;
 
-    return Result->new(
+    my $result = Result->new(
         input => $tree,
         results => {
             map {
@@ -40,6 +49,15 @@ sub process {
             } $self->child_names
         }
     );
+
+    eval {
+        $self->cross_validate($result->clean);
+    };
+    if ($@) {
+        $result->add_error($@);
+    }
+
+    return $result;
 }
 
 1;

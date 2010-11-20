@@ -15,9 +15,11 @@ has 'input' => (
 has 'errors' => (
     isa => ArrayRef,
     traits => [ 'Array' ],
+    default => sub { [] },
     handles => {
         errors => 'elements',
         error_count => 'count',
+        add_error => 'push'
     }
 );
 

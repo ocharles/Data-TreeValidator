@@ -22,6 +22,7 @@ has 'results' => (
 
 sub valid {
     my $self = shift;
+    ($self->errors == 0) &&
     (grep { $_->valid } $self->results) == $self->result_count;
 }
 
