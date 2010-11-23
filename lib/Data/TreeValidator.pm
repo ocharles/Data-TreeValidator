@@ -75,7 +75,7 @@ You will probably be most intrested in the following documentation:
 
 The essentials for specifying the structure of your validation tree.
 
-=item L<Data::TreeValidator::RepeatableBranch>
+=item L<Data::TreeValidator::RepeatingBranch>
 
 A branch that can repeat it's input
 
