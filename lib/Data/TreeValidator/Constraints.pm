@@ -51,9 +51,18 @@ methods). If an exception is not raised, the data will be assumed to be valid.
 
 All methods below are available for importing into using modules
 
-=method required($input)
+=func required
 
 Checks that $input is defined, and stringifies to a true value (not the empty
 string)
+
+=func length min => $min, max => $max
+
+Checks that a given input is between C<$min> and C<$max>. You do not have to
+specify both parameters, either or is also fine.
+
+=func options @options
+
+Checks that a given input is in the set defined by C<@options>.
 
 =cut
