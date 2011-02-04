@@ -7,6 +7,8 @@ use aliased 'Data::TreeValidator::Branch';
 use aliased 'Data::TreeValidator::Leaf';
 use aliased 'Data::TreeValidator::RepeatingBranch';
 
+use Data::TreeValidator::Constraints 'type';
+
 use Sub::Exporter -setup => {
     exports => [ qw( branch leaf repeating ) ],
 };
@@ -28,7 +30,9 @@ sub branch (&;) {
 }
 
 sub leaf {
-    return Leaf->new(@_);
+    my @args = @_ == 1 ? (constraints => [ type($_[0]) ] )
+                       : @_;
+    return Leaf->new(@args);
 }
 
 sub repeating (&;) {
