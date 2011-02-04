@@ -7,13 +7,13 @@ use Data::TreeValidator::Util qw( fail_constraint );
 use Set::Object qw( set );
 
 use Sub::Exporter -setup => {
-    exports => [ qw( length options required ) ]
+    exports => [ qw( length options required type ) ]
 };
 
 sub required { \&_required }
 sub _required {
     local $_ = shift;
-    fail_constrant("Required") unless defined $_ && "$_" ne '';
+    fail_constraint("Required") unless defined $_ && "$_" ne '';
 }
 
 sub length {
@@ -34,6 +34,13 @@ sub options {
     return sub {
         my ($input) = @_;
         $valid->contains($input);
+    };
+}
+
+sub type {
+    my $type = shift;
+    return sub {
+        $type->check(@_);
     };
 }
 
@@ -64,5 +71,9 @@ specify both parameters, either or is also fine.
 =func options @options
 
 Checks that a given input is in the set defined by C<@options>.
+
+=func type $type_constraint
+
+Checks that a given input satisfies a given L<Moose::Meta::TypeConstraint>.
 
 =cut
