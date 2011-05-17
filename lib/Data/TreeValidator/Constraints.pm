@@ -33,14 +33,16 @@ sub options {
     my $valid = set(@_);
     return sub {
         my ($input) = @_;
-        $valid->contains($input);
+        fail_constraint("Input must be a valid set member")
+          unless $valid->contains($input);
     };
 }
 
 sub type {
     my $type = shift;
     return sub {
-        $type->check(@_);
+      fail_constraint('Input must be of type: ' . $type->name . '"')
+        unless $type->check(@_);
     };
 }
 
@@ -74,6 +76,9 @@ Checks that a given input is in the set defined by C<@options>.
 
 =func type $type_constraint
 
-Checks that a given input satisfies a given L<Moose::Meta::TypeConstraint>.
+Checks that a given input satisfies a given L<Moose::Meta::TypeConstraint>.  E.g. 
+
+use MooseX::Types::Moose qw/Num/;
+type(Num);
 
 =cut

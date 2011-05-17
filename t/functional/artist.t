@@ -35,7 +35,7 @@ ok(!$validator->process({
     gender_id => 1
 })->valid);
 
-ok($validator->process({
+ok(!$validator->process({
     name => 'Spor',
     comment => 'Drum & bass artist',
     sort_name => 'Spor',
