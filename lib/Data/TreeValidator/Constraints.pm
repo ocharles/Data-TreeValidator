@@ -21,11 +21,12 @@ sub length {
     my ($min, $max) = @args{qw( min max )};
     return sub {
         my ($input) = @_;
+        my $length = defined $input ? length($input) : 0;
 
         fail_constraint("Input must be longer than $min characters")
-            if exists $args{min} && length($input) < $min;
+            if exists $args{min} && $length < $min;
         fail_constraint("Input must be shorter than $max characters")
-            if exists $args{max} && length($input) > $max;
+            if exists $args{max} && $length > $max;
     }
 }
 
