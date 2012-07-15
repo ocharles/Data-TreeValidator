@@ -18,6 +18,9 @@ test '"required" constraint' => sub {
 
     ok(exception { $constraint->('') },
         'constraint does not allow empty string input');
+
+    ok(!exception { $constraint->('0') },
+        'constraint does allow string "0"');
 };
 
 test '"length" constraint' => sub {

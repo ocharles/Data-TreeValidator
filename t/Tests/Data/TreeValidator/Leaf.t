@@ -5,6 +5,7 @@ use Test::Routine;
 use Test::Routine::Util;
 
 use aliased 'Data::TreeValidator::Leaf';
+use Data::TreeValidator::Constraints qw( required );
 use Data::TreeValidator::Util qw( fail_constraint );
 
 test 'leaf public api' => sub {
@@ -78,6 +79,14 @@ test 'leaf with an initializer' => sub {
     ok($result->valid, 'processing with an initializer gives a valid result');
     is($result->clean => $initialize,
         'clean value takes the initializers value');
+};
+
+test 'Can process with required/false string' => sub {
+    my $leaf = Leaf->new;
+    $leaf->add_constraint(required);
+
+    my $result = $leaf->process('0');
+    ok($result->valid, 'processing with 0 + required constraint is valid');
 };
 
 run_me;

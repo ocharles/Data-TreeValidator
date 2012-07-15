@@ -2,6 +2,7 @@ package Data::TreeValidator::Leaf;
 # ABSTRACT: Represents a single leaf node in the validation tree specification
 use Moose;
 use namespace::autoclean;
+use 5.10.0;
 
 use Data::TreeValidator::Types qw( Constraint Transformation Value );
 use MooseX::Types::Moose qw( ArrayRef CodeRef );
@@ -40,7 +41,7 @@ sub process {
     );
     my %args = @_;
 
-    my $process = $input || $args{initialize};
+    my $process = $input // $args{initialize};
 
     my @errors;
     for my $constraint ($self->constraints) {
